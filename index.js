@@ -1,62 +1,70 @@
+// CONSTANTS
+
+const COLA_PRICE = 50;
+const COLA_CALORIES = 40;
+
+const COFEE_PRICE = 80;
+const COFEE_CALORIES = 20;
+
+const CAESAR_PRICE = 100;
+const CAESAR_CALORIES = 20;
+
+const OLIVIER_PRICE = 50;
+const OLIVIER_CALORIES = 80;
+
+const SMALL_SIZE_PRICE = 50;
+const SMALL_SIZE_CALORIES = 20;
+
+const BIG_SIZE_PRICE = 100;
+const BIG_SIZE_CALORIES = 40;
+
+const CHEESE_STUFFING_PRICE = 10;
+const CHEESE_STUFFING_CALORIES = 20;
+
+const SALAD_STUFFING_PRICE = 20;
+const SALAD_STUFFING_CALORIES = 5;
+
+const POTATO_STUFFING_PRICE = 15;
+const POTATO_STUFFING_CALORIES = 10;
+
+// CLASSES
+
+// PRODUCT
 class Product {
-  constructor(name) {
+  constructor(name, price, calories) {
     this.name = name;
-    this.price = 0;
-    this.calories = 0;
-  }
-
-  setPrice(productPrice) {
-    this.price = productPrice
-  }
-
-  setCalories(productCalories) {
-    this.calories = productCalories
+    this.price = price;
+    this.calories = calories;
   }
 }
 
 // DRINK
-class Drink extends Product { }
 
-Drink.COLA = "COLA ";
-Drink.COFE = "COFE";
-
-const colaPrice = 50;
-const colaCalories = 40;
-
-const cofePrice = 80;
-const cofeCalories = 20;
-
-const cola = new Drink(Drink.COLA);
-const cofe = new Drink(Drink.COFE)
-
-cola.setPrice(colaPrice);
-cola.setCalories(colaCalories);
-cofe.setPrice(cofePrice);
-cofe.setCalories(cofeCalories);
+class Drink extends Product {
+  static COLA = "COLA ";
+  static COFEE = "COFEE";
+  constructor(name, price, calories) {
+    super(name, price, calories);
+  }
+}
 
 // SALAD
-class Salad extends Product { }
-
-Salad.CAESAR = "CAESAR ";
-Salad.OLIVIER = "OLIVIER";
-
-const caesarPrice = 100;
-const caesarCalories = 20;
-
-const olivierPrice = 50;
-const olivierCalories = 80;
-
-const caesar = new Salad(Drink.CAESAR);
-const olivier = new Salad(Drink.OLIVIER);
-
-caesar.setPrice(caesarPrice);
-caesar.setCalories(caesarCalories);
-
-olivier.setPrice(olivierPrice);
-olivier.setCalories(olivierCalories);
+class Salad extends Product {
+  static CAESAR = "CAESAR";
+  static OLIVIER = "OLIVIER";
+  constructor(name, price, calories) {
+    super(name, price, calories);
+  }
+}
 
 // HUMBURGER
 class Hamburger extends Product {
+  static SIZE_SMALL = 'small';
+  static SIZE_LARGE = 'large';
+  static STUFFING_CHEESE = 'cheese';
+  static STUFFING_SALAD = 'salad';
+  static STUFFING_POTATO = 'potato';
+
   constructor(size, stuffing) {
     super();
     this.size = size;
@@ -71,32 +79,6 @@ class Hamburger extends Product {
     this.calories = sizeCalories + stuffingCalories;
   }
 }
-
-Hamburger.SIZE_SMALL = 'small';
-Hamburger.SIZE_LARGE = 'large';
-Hamburger.STUFFING_CHEESE = 'cheese';
-Hamburger.STUFFING_SALAD = 'salad';
-Hamburger.STUFFING_POTATO = 'potato';
-
-const hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
-
-const smallSizePrice = 50;
-const smallSizeCalories = 20;
-
-const bigSizePrice = 100;
-const bigSizeCalories = 40;
-
-const cheeseStuffingPrice = 10;
-const cheeseStuffingCalories = 20;
-
-const saladStuffingPrice = 20;
-const saladStuffingCalories = 5;
-
-const potatoStuffingPrice = 15;
-const potatoStuffingCalories = 10;
-
-hamburger.calculatePrice(smallSizePrice, cheeseStuffingPrice)
-hamburger.calculateCalories(smallSizeCalories, cheeseStuffingCalories);
 
 // ORDER
 class Order {
@@ -138,14 +120,27 @@ class Order {
   }
 }
 
+// INSTANCES
+
+const cola = new Drink(Drink.COLA, COLA_PRICE, COLA_CALORIES);
+const cofee = new Drink(Drink.COFEE, COFEE_PRICE, COFEE_CALORIES);
+
+const caesar = new Salad(Salad.CAESAR, CAESAR_PRICE, CAESAR_CALORIES);
+const olivier = new Salad(Salad.OLIVIER, OLIVIER_PRICE, OLIVIER_CALORIES);
+
+const hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
+
+hamburger.calculatePrice(SMALL_SIZE_PRICE, CHEESE_STUFFING_PRICE)
+hamburger.calculateCalories(SMALL_SIZE_CALORIES, CHEESE_STUFFING_CALORIES);
+
 const order = new Order();
 order
-  .addProduct(cofe)
+  .addProduct(cofee)
   .addProduct(hamburger)
   .addProduct(olivier)
-  .deleteProduct(cofe)
+  .deleteProduct(cofee)
   .pay()
-  .deleteProduct(cofe)
+  .deleteProduct(cofee)
 order.calculatePrice();
 order.calculateCalories();
 
